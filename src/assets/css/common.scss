@@ -1,0 +1,21 @@
+.common-content {
+  position: sticky;
+  top: 0;
+  display: flex;
+  padding: 0.18rem;
+  // width: 5.04rem;
+  // height: 0.85rem;
+  align-items: center;
+  background: #fff;
+  gap: 0.28rem;
+}
+
+.common-to-search {
+  display: flex;
+  align-items: center;
+  width: 4.32rem;
+  height: 0.67rem;
+  background-color: #f6f6f6;
+  border-radius: 1rem;
+  gap: 0.15rem;
+}
