@@ -22,4 +22,7 @@ export default class FstToThrdCtgy{
       console.log(FstToThrdCtgy.secondCtgyList)
     })
   }
+  // static openOrCollapse(event:Event, secondCtgy:SecondCtgy){
+  //   secondCtgy.isReadyOpen = !secondCtgy.isReadyOpen
+  // }
 }

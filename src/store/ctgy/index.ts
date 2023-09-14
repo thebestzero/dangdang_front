@@ -2,6 +2,7 @@ import {Module} from 'vuex'
 import storage from 'good-storage'
 import CtgyApi from '@/api/CtgyApi'
 import {FirstCtgy,SecondCtgy,ThirdCtgy,CtgyState,initCtgyState} from './state'
+import {AxiosResponse} from 'axios'
 
 export const ctgyModule:Module<CtgyState, any> = {
   namespaced:true,
@@ -29,7 +30,10 @@ export const ctgyModule:Module<CtgyState, any> = {
       commit('storeFirstCtgyLst',res.data)
     },
     async findSecThrdCtgyList({commit},firstCtgyId:number){
-      const res = await CtgyApi.getSecThrdCtgyList(firstCtgyId)
+      const res:AxiosResponse<SecondCtgy[]> = await CtgyApi.getSecThrdCtgyList(firstCtgyId)
+      res.data = res.data.map((item)=>{
+         return {...item,subThirdCtgys: item.thirdCtgys.slice(0,5),isReadyOpen:true}
+      })
       commit('storeSecondCtgyLst',res.data)
     },
   }

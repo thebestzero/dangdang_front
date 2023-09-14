@@ -6,7 +6,9 @@ export interface FirstCtgy {
 export interface SecondCtgy {
   secondctgyId:number;
   secctgyname:string;
-  thirdCtgys:ThirdCtgy[]
+  thirdCtgys:ThirdCtgy[];
+  subThirdCtgys:ThirdCtgy[];
+  isReadyOpen:boolean
 }
 
 export interface ThirdCtgy {

@@ -13,16 +13,30 @@
         <span class="firstctgyname">{{ item.name }}</span>
       </li>
     </ul>
+    <div class="secondthrdctgy">
+      <ul>
+        <li
+          class="secondthrdctgy-item"
+          v-for="(item, index) in secondCtgyList"
+          :key="item.secondctgyId"
+        >
+          <div class="secondctgy-item">
+            <span class="secctgyname">{{ item.secctgyname }}</span>
+            <span class="secctgynameshop"
+            >{{ item.secctgyname }}馆
+              <i class="iconfont icon-xiangyoujiantou"></i>
+            </span>
+          </div>
+          <ThirdCtgy :secondCtgy= 'item' :thrdCtgys="item.thirdCtgys" :isReadyOpen='item.isReadyOpen' :subThirdCtgys='item.subThirdCtgys'/>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {FirstCtgy,SecondCtgy} from '@/store/ctgy/state'
-import { ref, watchEffect } from 'vue'
-import {CtgyActions} from '@/store/actions'
-import {ctgyGettersProxy} from '@/store/getters'
 import FstToThrdCtgy from '../service/index'
-
+import  ThirdCtgy  from './ThrdCtgy.vue'
 const {firstCtgyActiveIndex,firstCtgyList,secondCtgyList,getFirstCtgy,changeTab,getSecThrdCtgyList} = FstToThrdCtgy
 getFirstCtgy()
 getSecThrdCtgyList()
