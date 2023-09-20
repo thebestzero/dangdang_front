@@ -4,6 +4,7 @@
       class="thrdctgy-item"
       v-for="(item, index) in isReadyOpen ? subThirdCtgys : thrdCtgys "
       :key="item.thirdctgyId"
+      @click='toRouter'
     >
       <span class="thirdctgyname">{{ item.thirdname }}</span>
       <i class="iconfont icon-shuxian" :class='{shuxianHide: (index+1) % 3 === 0}'></i>
@@ -29,7 +30,7 @@
 <script setup lang='ts'>
 import {FirstCtgy,SecondCtgy,ThirdCtgy} from '@/piniastore/ctgy/state'
 import {defineProps} from 'vue'
-
+import {useRouter} from 'vue-router'
 const {thrdCtgys, secondCtgy, isReadyOpen, subThirdCtgys,
 } = defineProps<{thrdCtgys:ThirdCtgy[],secondCtgy:SecondCtgy,isReadyOpen:boolean,subThirdCtgys:ThirdCtgy[]}>()
 
@@ -46,6 +47,12 @@ const openOrCollapse = (event:Event, secondCtgy:SecondCtgy)=>{
     secondCtgy.isReadyOpen = true
     ulPanel.style.paddingBottom = '0'
   }
+}
+const router = useRouter()
+const toRouter = ()=>{
+  router.push({
+    name:'book'
+  })
 }
 </script>
 
