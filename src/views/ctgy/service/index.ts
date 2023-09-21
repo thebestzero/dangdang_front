@@ -1,28 +1,32 @@
-import { ref, watchEffect,Ref } from 'vue'
-import {FirstCtgy,SecondCtgy} from '@/store/ctgy/state'
-import { CtgyActions } from '@/store/ctgy/actions'
-import { ctgyGettersProxy } from '@/store/ctgy/getters'
+import { ref, watchEffect, Ref } from 'vue'
+import { useCtgyStore } from '@/store/ctgy'
+import { storeToRefs } from 'pinia'
+export default class FstToThrdCtgy {
+  static ctgyStore = useCtgyStore()
+  static ctgyStoreToRef = storeToRefs(this.ctgyStore)
+  static firstCtgyActiveIndex: Ref<number> = ref(0)
 
-export default class FstToThrdCtgy{
-  static firstCtgyActiveIndex: Ref<number> = ref(0);
-  static firstCtgyList: Ref<FirstCtgy[]> = ref([]);
-  static secondCtgyList: Ref<SecondCtgy[]> = ref([]);
-
-  static async getFirstCtgy() {
-    await CtgyActions.findFirstCtgyList()
-    FstToThrdCtgy.firstCtgyList.value = ctgyGettersProxy.getFirstCtgyList
+  static setCurrentFirstCtgy(index: number) {
+    const firstCtgy = FstToThrdCtgy.ctgyStore.firstCtgyList.find(
+      (firstCtgy) => {
+        return firstCtgy.firstCtgyId === index
+      },
+    )!
+    FstToThrdCtgy.ctgyStore.setCurrentFirstCtgy(firstCtgy)
   }
-  static  changeTab(index:number) {
+  static async getFirstCtgy() {
+    await FstToThrdCtgy.ctgyStore.findFirstCtgyList()
+    FstToThrdCtgy.setCurrentFirstCtgy(1)
+  }
+  static changeTab(index: number) {
     FstToThrdCtgy.firstCtgyActiveIndex.value = index
+    FstToThrdCtgy.setCurrentFirstCtgy(index + 1)
   }
   static getSecThrdCtgyList() {
-    watchEffect(async ()=>{
-      await CtgyActions.findSecThrdCtgyList(FstToThrdCtgy.firstCtgyActiveIndex.value + 1)
-      FstToThrdCtgy.secondCtgyList.value = ctgyGettersProxy.getSecondCtgyLst
-      console.log(FstToThrdCtgy.secondCtgyList)
+    watchEffect(async () => {
+      await FstToThrdCtgy.ctgyStore.findSecThrdCtgyList(
+        FstToThrdCtgy.firstCtgyActiveIndex.value + 1,
+      )
     })
   }
-  // static openOrCollapse(event:Event, secondCtgy:SecondCtgy){
-  //   secondCtgy.isReadyOpen = !secondCtgy.isReadyOpen
-  // }
 }

@@ -2,49 +2,76 @@
   <ul class="thrdctgy">
     <li
       class="thrdctgy-item"
-      v-for="(item, index) in isReadyOpen ? subThirdCtgys : thrdCtgys "
+      v-for="(item, index) in secondCtgy.isReadyOpen ? subThirdCtgys : thrdCtgys"
       :key="item.thirdctgyId"
+      @click="toRouter(item)"
     >
       <span class="thirdctgyname">{{ item.thirdname }}</span>
-      <i class="iconfont icon-shuxian" :class='{shuxianHide: (index+1) % 3 === 0}'></i>
+      <i
+        class="iconfont icon-shuxian"
+        :class="{ shuxianHide: (index + 1) % 3 === 0 }"
+      ></i>
     </li>
-    <div :class='{ readyOpen:isReadyOpen,readycollapse:!isReadyOpen}'
-      @click='openOrCollapse($event,secondCtgy)'
+    <div
+      :class="{ readyOpen: secondCtgy.isReadyOpen, readycollapse: !secondCtgy.isReadyOpen }"
+      @click="openOrCollapse($event, secondCtgy)"
     >
-      <span v-show='isReadyOpen'>
+      <span v-show="secondCtgy.isReadyOpen">
         展开
         <span class="circle-icon">
           <i class="iconfont icon-xiangxiajiantou"></i>
+        </span>
       </span>
-      </span>
-      <span v-show='!isReadyOpen'>
+      <span v-show="!secondCtgy.isReadyOpen">
         收起
         <span class="circle-icon">
-        <i class="iconfont icon-xiangshangjiantou"></i>
-         </span>
+          <i class="iconfont icon-xiangshangjiantou"></i>
+        </span>
       </span>
     </div>
   </ul>
 </template>
-<script setup lang='ts'>
-import {  ThirdCtgy,SecondCtgy } from '@/store/ctgy/state';
-import {defineProps} from 'vue'
+<script setup lang="ts">
+import { SecondCtgy, ThirdCtgy } from '@/store/ctgy/state'
+import {defineProps, watch} from 'vue'
+import { useRouter } from 'vue-router'
+import { useCtgyStore } from '@/store/ctgy'
 
-const {thrdCtgys, secondCtgy, isReadyOpen, subThirdCtgys,
-} = defineProps<{thrdCtgys:ThirdCtgy[],secondCtgy:SecondCtgy,isReadyOpen:boolean,subThirdCtgys:ThirdCtgy[]}>()
-
+const router = useRouter()
+const store = useCtgyStore()
+const { thrdCtgys, secondCtgy, subThirdCtgys } = defineProps<{
+  thrdCtgys: ThirdCtgy[]
+  secondCtgy: SecondCtgy
+  subThirdCtgys: ThirdCtgy[]
+}>()
 /*
-* 这是由于 Vue 3 使用了 Proxy 对象来实现响应式系统。当父组件传递对象类型的 prop 给子组件时，Vue 3 会在内部使用 Proxy 对象对这个对象进行封装，以便能够监听到对于对象的属性修改。当子组件对对象进行属性修改时，Vue 3 会通过 Proxy 对象捕捉到这些修改，并触发相应的更新。
-* */
-const openOrCollapse = (event:Event, secondCtgy:SecondCtgy)=>{
+ * 这是由于 Vue 3 使用了 Proxy 对象来实现响应式系统。当父组件传递对象类型的 prop 给子组件时，Vue 3 会在内部使用 Proxy 对象对这个对象进行封装，以便能够监听到对于对象的属性修改。当子组件对对象进行属性修改时，Vue 3 会通过 Proxy 对象捕捉到这些修改，并触发相应的更新。
+ * */
+const openOrCollapse = (event: Event, secondCtgy: SecondCtgy) => {
   const currentTarget = <HTMLBodyElement>event.currentTarget
   const ulPanel = currentTarget.parentElement!
-  if (secondCtgy.isReadyOpen){
+  if (secondCtgy.isReadyOpen) {
     secondCtgy.isReadyOpen = false
-    if (secondCtgy.thirdCtgys.length % 3 === 0) ulPanel.style.paddingBottom = 0.5 + 'rem'
-  }else {
+    if (secondCtgy.thirdCtgys.length % 3 === 0)
+      ulPanel.style.paddingBottom = 0.5 + 'rem'
+  } else {
     secondCtgy.isReadyOpen = true
+    ulPanel.style.paddingBottom = '0'
   }
+}
+watch(()=>secondCtgy.isReadyOpen,(val) => {
+  console.log(val,'secondCtgy.isReadyOpen')
+})
+const toRouter = (item: ThirdCtgy) => {
+  console.log(secondCtgy.isReadyOpen)
+  store.setCurrentSecondCtgy(secondCtgy)
+  store.setCurrentThrdCtgy(item)
+  store.setCurrentThirdCtgysList(thrdCtgys)
+  store.setCurrentSubThirdCtgysList(subThirdCtgys)
+  store.setIsReadyOpen(secondCtgy.isReadyOpen)
+  router.push({
+    name: 'book',
+  })
 }
 </script>
 
@@ -61,15 +88,15 @@ const openOrCollapse = (event:Event, secondCtgy:SecondCtgy)=>{
     .thirdctgyname {
       flex: 1;
     }
-    .shuxianHide{
+    .shuxianHide {
       opacity: 0;
     }
-    .icon-shuxian{
+    .icon-shuxian {
       position: relative;
       top: 0.02rem;
     }
   }
-  .readyOpen{
+  .readyOpen {
     width: 1.25rem;
     display: flex;
     align-items: center;
@@ -77,7 +104,7 @@ const openOrCollapse = (event:Event, secondCtgy:SecondCtgy)=>{
     position: relative;
     top: -0.01rem;
   }
-  .readycollapse{
+  .readycollapse {
     position: absolute;
     left: 2.7rem;
     bottom: 0.2rem;
@@ -88,7 +115,7 @@ const openOrCollapse = (event:Event, secondCtgy:SecondCtgy)=>{
     z-index: 1;
   }
   .circle-icon::before {
-    content: "";
+    content: '';
     width: 0.16rem; /* 替换为你想要的宽度 */
     height: 0.16rem; /* 替换为你想要的高度 */
     border: 1px solid #2a2a2a;
@@ -99,4 +126,3 @@ const openOrCollapse = (event:Event, secondCtgy:SecondCtgy)=>{
   }
 }
 </style>
-

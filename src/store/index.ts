@@ -1,8 +1,4 @@
-import {createStore} from 'vuex'
-import {ctgyModule} from './ctgy'
-
-export default createStore({
-  modules:{
-    ctgyModule
-  }
-})
+import {useCtgyStore} from './ctgy'
+export default {
+  useCtgyStore
+}

@@ -1,13 +1,13 @@
 <template>
   <div class="content">
-    <i class="iconfont icon-zuojiantou"></i>
+    <i class="iconfont icon-zuojiantou" @click="backRouter"></i>
     <div class="tosearch">
       <i class="iconfont icon-fangdajing"></i>
       <div class="tosearch-content">
         <input type="text" />
         <span>
             <div>
-              生气小丑
+              {{getCurrentThrdCtgy.thirdname}}
               <i class="iconfont icon-close"></i>
             </div>
           </span>
@@ -17,7 +17,19 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {useCtgyStore} from '@/store/ctgy';
+import {storeToRefs} from 'pinia';
+import {useRouter} from 'vue-router';
+// import {searchService} from '../service'
+const store = useCtgyStore()
+const router = useRouter()
+// const {backRouter} = searchService
+const {getCurrentThrdCtgy} = storeToRefs(store)
+const backRouter = () => {
+  router.back()
+}
+</script>
 <style lang="scss" scoped>
 @import "@/assets/css/common.scss";
 .content {

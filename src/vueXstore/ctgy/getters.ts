@@ -1,4 +1,4 @@
-import store from '@/store'
+import store from '@/vueXstore'
 
 const ctgyGettersTarget = {
   getFirstCtgyList:[],

@@ -27,7 +27,7 @@
               <i class="iconfont icon-xiangyoujiantou"></i>
             </span>
           </div>
-          <ThirdCtgy :secondCtgy= 'item' :thrdCtgys="item.thirdCtgys" :isReadyOpen='item.isReadyOpen' :subThirdCtgys='item.subThirdCtgys'/>
+          <ThirdCtgy :secondCtgy= 'item' :thrdCtgys="item.thirdCtgys"  :subThirdCtgys='item.subThirdCtgys'/>
         </li>
       </ul>
     </div>
@@ -37,7 +37,8 @@
 <script setup lang="ts">
 import FstToThrdCtgy from '../service/index'
 import  ThirdCtgy  from './ThrdCtgy.vue'
-const {firstCtgyActiveIndex,firstCtgyList,secondCtgyList,getFirstCtgy,changeTab,getSecThrdCtgyList} = FstToThrdCtgy
+const {firstCtgyActiveIndex,getFirstCtgy,changeTab,getSecThrdCtgyList,ctgyStoreToRef} = FstToThrdCtgy
+const {firstCtgyList,secondCtgyList} = ctgyStoreToRef
 getFirstCtgy()
 getSecThrdCtgyList()
 </script>

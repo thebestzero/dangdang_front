@@ -19,9 +19,21 @@ export interface ThirdCtgy {
 export interface CtgyState{
   firstCtgyList:FirstCtgy[];
   secondCtgyList:SecondCtgy[];
+  currentFirstCtgy: FirstCtgy;
+  currentSecondCtgy:SecondCtgy;
+  currentThrdCtgy:ThirdCtgy;
+  currentThirdCtgysList:ThirdCtgy[];
+  currentSubThirdCtgysList:ThirdCtgy[];
+  isReadyOpen:boolean
 }
 
 export const initCtgyState:CtgyState = {
   firstCtgyList:[],
-  secondCtgyList:[]
+  secondCtgyList:[],
+  currentFirstCtgy: {} as FirstCtgy,
+  currentSecondCtgy:{} as SecondCtgy,
+  currentThrdCtgy:{} as ThirdCtgy,
+  currentThirdCtgysList:[],
+  currentSubThirdCtgysList:[],
+  isReadyOpen:false
 }
