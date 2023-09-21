@@ -97,8 +97,8 @@ export const useCtgyStore = defineStore('ctgyModule', {
       goodStorage.set('currentSubThirdCtgysList', thirdCtgys)
     },
     setIsReadyOpen(isReadyOpen: boolean) {
+      console.log(isReadyOpen)
       this.isReadyOpen = isReadyOpen
-      goodStorage.set('isReadyOpen', isReadyOpen)
     },
   },
 })

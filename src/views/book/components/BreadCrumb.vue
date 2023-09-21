@@ -17,7 +17,7 @@ const {getCurrentFirstCtgy,getCurrentSecondCtgy} = ctgyStoreToRef
     display: flex;
     align-items: center;
     font-size: 0.18rem;
-    padding: 0.18rem;
+    padding: 0.1rem 0.18rem;
     gap:0.1rem;
     font-weight: bold;
   }

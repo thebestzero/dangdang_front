@@ -58,17 +58,13 @@ const openOrCollapse = (event: Event, secondCtgy: SecondCtgy) => {
     secondCtgy.isReadyOpen = true
     ulPanel.style.paddingBottom = '0'
   }
+  store.setIsReadyOpen(secondCtgy.isReadyOpen)
 }
-watch(()=>secondCtgy.isReadyOpen,(val) => {
-  console.log(val,'secondCtgy.isReadyOpen')
-})
 const toRouter = (item: ThirdCtgy) => {
-  console.log(secondCtgy.isReadyOpen)
   store.setCurrentSecondCtgy(secondCtgy)
   store.setCurrentThrdCtgy(item)
   store.setCurrentThirdCtgysList(thrdCtgys)
   store.setCurrentSubThirdCtgysList(subThirdCtgys)
-  store.setIsReadyOpen(secondCtgy.isReadyOpen)
   router.push({
     name: 'book',
   })

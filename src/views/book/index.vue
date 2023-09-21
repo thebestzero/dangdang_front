@@ -32,6 +32,5 @@ import getImg from '@/utils/imgUtil'
   top: 2.7rem;
   margin: 0.18rem;
   width: 5.04rem;
-  background-color: #9a6e3a;
 }
 </style>
