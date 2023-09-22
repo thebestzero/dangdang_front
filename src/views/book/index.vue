@@ -5,12 +5,14 @@
     <breadCrumb></breadCrumb>
     <thirdCtgy></thirdCtgy>
   </div>
+  <bookItem></bookItem>
 </template>
 
 <script setup lang="ts">
 import toSearch from './components/toSearch.vue'
 import breadCrumb from './components/BreadCrumb.vue'
 import thirdCtgy from './components/ThirdCtgys.vue'
+import bookItem from './components/BookItem.vue'
 import getImg from '@/utils/imgUtil'
 </script>
 

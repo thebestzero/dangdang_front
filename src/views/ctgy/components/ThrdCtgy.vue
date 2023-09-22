@@ -2,7 +2,7 @@
   <ul class="thrdctgy">
     <li
       class="thrdctgy-item"
-      v-for="(item, index) in secondCtgy.isReadyOpen ? subThirdCtgys : thrdCtgys"
+      v-for="(item, index) in isReadyOpen ? subThirdCtgys : thrdCtgys"
       :key="item.thirdctgyId"
       @click="toRouter(item)"
     >
@@ -13,16 +13,16 @@
       ></i>
     </li>
     <div
-      :class="{ readyOpen: secondCtgy.isReadyOpen, readycollapse: !secondCtgy.isReadyOpen }"
-      @click="openOrCollapse($event, secondCtgy)"
+      :class="{ readyOpen: isReadyOpen, readycollapse: !isReadyOpen}"
+      @click="openOrCollapse($event)"
     >
-      <span v-show="secondCtgy.isReadyOpen">
+      <span v-show="isReadyOpen">
         展开
         <span class="circle-icon">
           <i class="iconfont icon-xiangxiajiantou"></i>
         </span>
       </span>
-      <span v-show="!secondCtgy.isReadyOpen">
+      <span v-show="!isReadyOpen">
         收起
         <span class="circle-icon">
           <i class="iconfont icon-xiangshangjiantou"></i>
@@ -33,7 +33,7 @@
 </template>
 <script setup lang="ts">
 import { SecondCtgy, ThirdCtgy } from '@/store/ctgy/state'
-import {defineProps, watch} from 'vue'
+import {computed, defineProps, watch} from 'vue'
 import { useRouter } from 'vue-router'
 import { useCtgyStore } from '@/store/ctgy'
 
@@ -47,7 +47,10 @@ const { thrdCtgys, secondCtgy, subThirdCtgys } = defineProps<{
 /*
  * 这是由于 Vue 3 使用了 Proxy 对象来实现响应式系统。当父组件传递对象类型的 prop 给子组件时，Vue 3 会在内部使用 Proxy 对象对这个对象进行封装，以便能够监听到对于对象的属性修改。当子组件对对象进行属性修改时，Vue 3 会通过 Proxy 对象捕捉到这些修改，并触发相应的更新。
  * */
-const openOrCollapse = (event: Event, secondCtgy: SecondCtgy) => {
+const isReadyOpen = computed(() => {
+  return secondCtgy.isReadyOpen
+})
+const openOrCollapse = (event: Event) => {
   const currentTarget = <HTMLBodyElement>event.currentTarget
   const ulPanel = currentTarget.parentElement!
   if (secondCtgy.isReadyOpen) {

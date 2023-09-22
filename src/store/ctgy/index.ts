@@ -89,10 +89,24 @@ export const useCtgyStore = defineStore('ctgyModule', {
       goodStorage.set('currentThrdCtgy', thirdCtgy)
     },
     setCurrentThirdCtgysList(thirdCtgys: ThirdCtgy[]) {
+      // const index = thirdCtgys.findIndex(
+      //   (item) => item.thirdctgyId === this.currentThrdCtgy.thirdctgyId,
+      // )
+      // if (index > -1) {
+      //   const removed = thirdCtgys.splice(index, 1)
+      //   thirdCtgys.push(removed[0])
+      // }
       this.currentThirdCtgysList = thirdCtgys
       goodStorage.set('currentThirdCtgysList', thirdCtgys)
     },
     setCurrentSubThirdCtgysList(thirdCtgys: ThirdCtgy[]) {
+      // const index = thirdCtgys.findIndex(
+      //   (item) => item.thirdctgyId === this.currentThrdCtgy.thirdctgyId,
+      // )
+      // if (index > -1) {
+      //   const removed = thirdCtgys.splice(index, 1)
+      //   thirdCtgys.push(removed[0])
+      // }
       this.currentSubThirdCtgysList = thirdCtgys
       goodStorage.set('currentSubThirdCtgysList', thirdCtgys)
     },

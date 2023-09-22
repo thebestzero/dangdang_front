@@ -27,7 +27,7 @@
               <i class="iconfont icon-xiangyoujiantou"></i>
             </span>
           </div>
-          <ThirdCtgy :secondCtgy= 'item' :thrdCtgys="item.thirdCtgys"  :subThirdCtgys='item.subThirdCtgys'/>
+          <ThirdCtgy :secondCtgy= 'item' :thrdCtgys="item.thirdCtgys" :isReadyOpen='item.isReadyOpen' :subThirdCtgys='item.subThirdCtgys'/>
         </li>
       </ul>
     </div>
