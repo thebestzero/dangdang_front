@@ -6,7 +6,7 @@
       <div class="tosearch-content">
         <input type="text" />
         <span>
-            <div>
+            <div v-show="getCurrentThrdCtgy.thirdname !==''">
               {{getCurrentThrdCtgy.thirdname}}
               <i class="iconfont icon-close"></i>
             </div>
@@ -34,6 +34,7 @@ const backRouter = () => {
 @import "@/assets/css/common.scss";
 .content {
   @extend .common-content;
+  z-index: 2;
   .tosearch {
     @extend .common-to-search;
     .tosearch-content{

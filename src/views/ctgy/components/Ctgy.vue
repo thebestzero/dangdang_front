@@ -35,9 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import FstToThrdCtgy from '../service/index'
+import CtgyService from '../service/index'
 import  ThirdCtgy  from './ThrdCtgy.vue'
-const {firstCtgyActiveIndex,getFirstCtgy,changeTab,getSecThrdCtgyList,ctgyStoreToRef} = FstToThrdCtgy
+const {firstCtgyActiveIndex,getFirstCtgy,changeTab,getSecThrdCtgyList,ctgyStoreToRef} = CtgyService
 const {firstCtgyList,secondCtgyList} = ctgyStoreToRef
 getFirstCtgy()
 getSecThrdCtgyList()

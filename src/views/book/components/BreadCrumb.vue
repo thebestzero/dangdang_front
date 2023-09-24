@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import FstToThrdCtgy from '@/views/ctgy/service'
-const {ctgyStoreToRef} = FstToThrdCtgy
+import CtgyService from '@/views/ctgy/service'
+const {ctgyStoreToRef} = CtgyService
 const {getCurrentFirstCtgy,getCurrentSecondCtgy} = ctgyStoreToRef
 </script>
 

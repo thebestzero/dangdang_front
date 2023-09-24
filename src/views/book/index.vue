@@ -4,8 +4,9 @@
   <div class="bookctgys">
     <breadCrumb></breadCrumb>
     <thirdCtgy></thirdCtgy>
+    <bookSort></bookSort>
+    <bookItem></bookItem>
   </div>
-  <bookItem></bookItem>
 </template>
 
 <script setup lang="ts">
@@ -13,6 +14,7 @@ import toSearch from './components/toSearch.vue'
 import breadCrumb from './components/BreadCrumb.vue'
 import thirdCtgy from './components/ThirdCtgys.vue'
 import bookItem from './components/BookItem.vue'
+import bookSort from './components/BookSort.vue'
 import getImg from '@/utils/imgUtil'
 </script>
 

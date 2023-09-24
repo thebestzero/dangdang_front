@@ -114,5 +114,12 @@ export const useCtgyStore = defineStore('ctgyModule', {
       console.log(isReadyOpen)
       this.isReadyOpen = isReadyOpen
     },
+    clearCurrentThrdCtgy() {
+      // this.currentThrdCtgy = {
+      //   thirdctgyId:0,
+      //   thirdname:'',
+      // }
+      // goodStorage.set('currentThrdCtgy', this.currentThrdCtgy)
+    },
   },
 })

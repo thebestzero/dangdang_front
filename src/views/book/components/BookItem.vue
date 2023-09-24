@@ -1,31 +1,93 @@
 <template>
   <div class="content">
-    <div class="bookitem">
-      <img class="book-pic" :src="getImg('1童年.png')" />
+    <div
+      class="bookitem"
+      v-for='(item,index) in getBookList'
+    >
+      <img class="book-pic" :src="getImg(item.bookpicname)" />
       <div class="bookinfo">
         <div class="bookinfo-brief">
-          <div class="book-name">西游记后传</div>
+          <div class="book-name">{{item.bookname}}</div>
           <div class="book-author-publs">
-            <span class="author spacing">王五</span>
+            <span class="author spacing">{{item.author}}</span>
             <span class="separator spacing">|</span>
-            <span class="publs spacing">出版社</span>
+            <span class="publs spacing">{{item.publishername}}</span>
+          </div>
+        </div>
+        <div class="bookinfo-other">
+          <div class="price">
+          <span class="discountprice spacing">
+            <span class="symbol">&yen;</span>
+            {{
+              _.round(
+                _.toNumber(item.originalprice) * _.toNumber(item.discount),
+                2
+              )
+            }}
+          </span>
+            <span class="originprice spacing">&yen;{{ item.originalprice }}</span>
+            <span class="discount">{{ item.discount }}折</span>
+          </div>
+          <div class="give">
+            <span class="self-support">自营</span>
+            <span class="coupons">券</span>
+            <span class="free-shipping">包邮</span>
+          </div>
+          <div class="monthsalescount">
+            <span>月售{{ item.monthsalecount }}</span>
+          </div>
+          <div class="ranklist">
+            <span>图书畅销总排行榜第{{ item.publishid }}名</span>
+          </div>
+          <div class="addordel">
+            <div
+              class="firstAddShopCart"
+              v-if="!item.bookcount"
+            >
+              添加到购物车
+            </div>
+            <div class="addordelButton" v-else>
+              <div
+                v-show="item.bookcount === 1"
+              >
+                <i class="iconfont icon-shanchu"></i>
+              </div>
+              <div
+                class="buttonBackgroud"
+                v-show="item.bookcount > 1"
+              >
+                <i class="iconfont icon-yuanjianhao back"></i>
+              </div>
+              <div class="bookcount">
+                {{ item.bookcount }}
+              </div>
+              <div
+                class="buttonBackgroud"
+              >
+                <i class="iconfont icon-yuanjia back"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="bookinfo-other"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import getImg from '@/utils/imgUtil'
+import BookService from '@/views/book/service'
+import CtgyService from '@/views/ctgy/service'
+import _ from 'lodash';
+
+const {requestBookList} = BookService
+const {getBookList} = BookService.bookStoreToRefs
+const {getCurrentThrdCtgy} = CtgyService.ctgyStoreToRef
+
+requestBookList(getCurrentThrdCtgy.value.thirdctgyId)
 </script>
 
 <style lang="scss" scoped>
-.content{
-  position: absolute;
-  top: 4.2rem;
-}
 .bookitem {
   margin-top: 0.2rem;
   display: grid;
@@ -36,6 +98,7 @@ import getImg from '@/utils/imgUtil'
     width: 1.8rem;
     height: 2.2rem;
     object-fit: contain;
+    justify-self: flex-start;
   }
   .bookinfo {
     width: 2.7rem;

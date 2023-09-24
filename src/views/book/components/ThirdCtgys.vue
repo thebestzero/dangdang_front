@@ -1,6 +1,9 @@
 <template>
   <div class='content'>
-    <div class='thrdctgys'><span class='thrdctgys-item'>全部</span></div>
+    <div class='thrdctgys'
+         :class="{'thrdctgys-active':getCurrentThrdCtgy.thirdctgyId === 10086}"
+         @click='chooseAll'>
+      <span class='thrdctgys-item'  >全部</span></div>
     <div
       class='thrdctgys'
       :class="{'thrdctgys-active':item.thirdctgyId === getCurrentThrdCtgy.thirdctgyId}"
@@ -23,23 +26,31 @@
 </template>
 
 <script setup lang="ts">
-import FstToThrdCtgy from '@/views/ctgy/service'
+import CtgyService from '@/views/ctgy/service'
+import BookService from '@/views/book/service'
 import { onUnmounted } from 'vue'
 import {ThirdCtgy} from '@/store/ctgy/state';
 const {
   isReadyOpen,
   getCurrentSubThirdCtgysList,
   getCurrentThirdCtgysList,
-  getCurrentThrdCtgy
-} = FstToThrdCtgy.ctgyStoreToRef
+  getCurrentThrdCtgy,
+  getCurrentSecondCtgy
+} = CtgyService.ctgyStoreToRef
+const {changeBread} = BookService
 const tougleisReadyOpen = (isReadyOpen:boolean)=>{
-  FstToThrdCtgy.ctgyStore.setIsReadyOpen(isReadyOpen)
+  CtgyService.ctgyStore.setIsReadyOpen(isReadyOpen)
 }
-const changeBread = (thrdctgy:ThirdCtgy) => {
-  FstToThrdCtgy.ctgyStore.setCurrentThrdCtgy(thrdctgy)
+const chooseAll = ()=>{
+  console.log('chooseAll')
+  CtgyService.ctgyStore.setCurrentThrdCtgy({
+    thirdname:'',
+    thirdctgyId:10086
+  })
+  BookService.requestFullBookList(getCurrentSecondCtgy.value.secondctgyId)
 }
 onUnmounted(()=>{
-  FstToThrdCtgy.ctgyStore.setIsReadyOpen(true)
+  CtgyService.ctgyStore.setIsReadyOpen(true)
 })
 </script>
 
@@ -63,9 +74,11 @@ onUnmounted(()=>{
     }
   }
   .icon{
+    width: 0.2rem;
+    height: 0.2rem;
     position: relative;
-    right: 0.2rem;
-    top: 0.02rem;
+    right: -4rem;
+    top: -0.7rem;
   }
   &::after{
     display: block;
