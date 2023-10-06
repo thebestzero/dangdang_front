@@ -1,6 +1,7 @@
 import { ref, watchEffect, Ref } from 'vue'
 import { useCtgyStore } from '@/store/ctgy'
 import { storeToRefs } from 'pinia'
+import BookService from '@/views/book/service'
 export default class CtgyService {
   static ctgyStore = useCtgyStore()
   static ctgyStoreToRef = storeToRefs(this.ctgyStore)
@@ -21,6 +22,7 @@ export default class CtgyService {
   static changeTab(index: number) {
     CtgyService.firstCtgyActiveIndex.value = index
     CtgyService.setCurrentFirstCtgy(index + 1)
+    BookService.uptBookNumWithSCLstNum()
   }
   static getSecThrdCtgyList() {
     watchEffect(async () => {

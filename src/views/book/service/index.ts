@@ -3,6 +3,7 @@ import {storeToRefs} from 'pinia'
 import {ref} from 'vue'
 import CtgyService from '@/views/ctgy/service'
 import { ThirdCtgy } from '@/store/ctgy/state'
+import ShopCartService from '@/views/book/service/shopCart'
 export default class BookService{
   static bookStore = useBookStore()
   static bookStoreToRefs = storeToRefs(this.bookStore)
@@ -13,10 +14,14 @@ export default class BookService{
   static async requestBookList(thirdCtgyId:number,sortField:string='originalprice',ascOrDesc:string='asc'){
     if (sortField === 'price') sortField = 'originalprice'
     await BookService.bookStore.getBooksByThirdCtgyId(thirdCtgyId,sortField,ascOrDesc)
+    await ShopCartService.requestShopCartList()
+    BookService.uptBookNumWithSCLstNum()
   }
   static async requestFullBookList(secondctgyId:number,sortField:string='originalprice',ascOrDesc:string='asc'){
     if (sortField === 'price') sortField = 'originalprice'
     await BookService.bookStore.getBooksBySecCtgyId(secondctgyId,sortField,ascOrDesc)
+    await ShopCartService.requestShopCartList()
+    BookService.uptBookNumWithSCLstNum()
   }
   static changeBread(thrdctgy:ThirdCtgy) {
     CtgyService.ctgyStore.setCurrentThrdCtgy(thrdctgy)
@@ -33,5 +38,22 @@ export default class BookService{
     }else {
       BookService.requestBookList(getCurrentThrdCtgy.thirdctgyId,BookService.sortField.value,BookService.ascOrDesc.value)
     }
+  }
+  static updateBookNum(bookNum:number,curbookisbn?:string){
+    const bookList = BookService.bookStore.getBookList
+    for (let i = 0; i < bookList.length; i++) {
+      if (curbookisbn) {
+        if (curbookisbn === bookList[i].ISBN) {
+          bookList[i].purcharsenum = bookNum
+          break
+        }
+      } else {
+        bookList[i].purcharsenum = bookNum
+      }
+    }
+    return bookList
+  }
+  static uptBookNumWithSCLstNum(){
+    ShopCartService.uptBookNumWithSCLstNum(BookService.updateBookNum(0))
   }
 }

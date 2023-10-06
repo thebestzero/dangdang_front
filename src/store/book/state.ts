@@ -8,8 +8,9 @@ export interface BookItem {
   bookpicname:string;
   secondctgyId:number;
   thirdctgyId:number;
-  originalprice:string;
-  discount:string;
+  originalprice:number;
+  discount:number;
+  purcharsenum: number
 }
 
 export interface BookState {

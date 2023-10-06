@@ -39,35 +39,7 @@
           <div class="ranklist">
             <span>图书畅销总排行榜第{{ item.publishid }}名</span>
           </div>
-          <div class="addordel">
-            <div
-              class="firstAddShopCart"
-              v-if="!item.bookcount"
-            >
-              添加到购物车
-            </div>
-            <div class="addordelButton" v-else>
-              <div
-                v-show="item.bookcount === 1"
-              >
-                <i class="iconfont icon-shanchu"></i>
-              </div>
-              <div
-                class="buttonBackgroud"
-                v-show="item.bookcount > 1"
-              >
-                <i class="iconfont icon-yuanjianhao back"></i>
-              </div>
-              <div class="bookcount">
-                {{ item.bookcount }}
-              </div>
-              <div
-                class="buttonBackgroud"
-              >
-                <i class="iconfont icon-yuanjia back"></i>
-              </div>
-            </div>
-          </div>
+          <AddSubtrsc :bookItem='item'></AddSubtrsc>
         </div>
       </div>
     </div>
@@ -78,6 +50,7 @@
 import getImg from '@/utils/imgUtil'
 import BookService from '@/views/book/service'
 import CtgyService from '@/views/ctgy/service'
+import AddSubtrsc from './AddSubtrsc.vue'
 import _ from 'lodash';
 
 const {requestBookList} = BookService
