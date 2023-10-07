@@ -6,6 +6,7 @@
     <thirdCtgy></thirdCtgy>
     <bookSort></bookSort>
     <bookItem></bookItem>
+    <shopCart></shopCart>
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import breadCrumb from './components/BreadCrumb.vue'
 import thirdCtgy from './components/ThirdCtgys.vue'
 import bookItem from './components/BookItem.vue'
 import bookSort from './components/BookSort.vue'
+import shopCart from './components/ShopCart.vue';
 import getImg from '@/utils/imgUtil'
 </script>
 

@@ -32,7 +32,7 @@ export const useShopStore = defineStore('shopStore', {
       this.shopCartList = newVal
     },
     async appOrSubtrBookFrmShopCart(shopCart:ShopCart){
-      const res:AxiosResponse<ShopCart> = await ShopCartApi.addBookToShopCart(shopCart)
+      const res:AxiosResponse<ShopCart> = await ShopCartApi.appOrSubtrBookFrmShopCart(shopCart)
       const dbShopCart = res.data
       const newVal = storage.set('shopCartList',dbShopCart,OPTION.ADDAPPENDOBJTOARR,'shopcartid',dbShopCart.shopcartid)
       this.shopCartList = newVal
