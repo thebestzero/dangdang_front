@@ -1,7 +1,7 @@
 <template>
   <div class="shopcart">
     <div class="content">
-      <div class="content-left">
+      <div class="content-left" @click="router.push({name:'shopcartlist'})">
         <i class="iconfont icon-gouwuche gouwuche"></i>
         <div class="num" v-show="totalCount > 0">{{ totalCount }}</div>
         <div class="ball-container">
@@ -30,9 +30,11 @@
 </template>
 
 <script setup lang="ts">
+import {useRouter} from 'vue-router'
 import ShopCartService from '@/views/book/service/shopCart'
 const { totalCount, totalPrice } = ShopCartService.computeTotal()
 const { ball,beforeBall,balling,afterBall } = ShopCartService
+const router = useRouter()
 </script>
 
 <style scoped lang="scss">

@@ -18,7 +18,12 @@ const routes:RouteRecordRaw[] = [
     name:'book',
     path:'/book',
     component:book
-  }
+  },
+  {
+    name:'shopcartlist',
+    path:'/shopcartlist',
+    component: () => import('@/views/shopcartlist/index.vue')
+  },
 ]
 
 const router = createRouter({
