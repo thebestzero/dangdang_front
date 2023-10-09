@@ -5,19 +5,35 @@
     >
       <div class='inner' @click='addBookToShopCart(bookItem)'>添加到购物车</div>
     </div>
-    <div class='shopcart-operate'
-         v-else-if='bookItem.purcharsenum > 0'
-    >
-      <span class='shopcart-operate-minus' v-show='bookItem.purcharsenum > 1' @click='appOrSubtrBookFrmShoListCart(bookItem,$event)'>
+    <div v-else>
+      <div class='shopcart-operate'
+           v-if='bookItem && bookItem.purcharsenum > 0'
+      >
+        <span class='shopcart-operate-minus' v-show='bookItem.purcharsenum > 1' @click='appOrSubtrBookFrmShoListCart(bookItem,$event)'>
         <span class='inner'>-</span>
       </span>
-      <span class='shopcart-operate-del' v-show='bookItem.purcharsenum === 1' @click='delBookShopCart(bookItem)'>
+        <span class='shopcart-operate-del' v-show='bookItem.purcharsenum === 1' @click='delBookShopCart(bookItem)'>
         <span class='inner'><i class='iconfont icon-shanchu shanchu'></i></span>
       </span>
-      <span class='purchasenum'>{{bookItem.purcharsenum}}</span>
-      <span class='shopcart-operate-add' @click='appOrSubtrBookFrmShoListCart(bookItem,$event)'>
+        <span class='purchasenum'>{{bookItem.purcharsenum}}</span>
+        <span class='shopcart-operate-add' @click='appOrSubtrBookFrmShoListCart(bookItem,$event)'>
         <span class='inner'>+</span>
       </span>
+      </div>
+      <div class='shopcart-operate'
+           v-else-if='shopCart && shopCart.bookisbn'
+      >
+        <span class='shopcart-operate-minus' v-show='shopCart.purcharsenum > 1' @click='appOrSubtrBookInShoListCart(shopCart,$event)'>
+        <span class='inner'>-</span>
+      </span>
+        <span class='shopcart-operate-del' v-show='shopCart.purcharsenum === 1' @click='delBookInShopCart(shopCart)'>
+        <span class='inner'><i class='iconfont icon-shanchu shanchu'></i></span>
+      </span>
+        <span class='purchasenum'>{{shopCart.purcharsenum}}</span>
+        <span class='shopcart-operate-add' @click='appOrSubtrBookInShoListCart(shopCart,$event)'>
+        <span class='inner'>+</span>
+      </span>
+      </div>
     </div>
   </div>
 </template>
@@ -26,10 +42,12 @@
 import {defineProps} from 'vue'
 import {BookItem} from '@/store/book/state'
 import ShopCartService from '@/views/book/service/shopCart'
-const {bookItem} =  defineProps<{
-  bookItem:BookItem
+import {ShopCart} from '@/store/shopCart/state';
+const {bookItem,shopCart} =  defineProps<{
+  bookItem?:BookItem
+  shopCart?:ShopCart
 }>()
-const { addBookToShopCart,appOrSubtrBookFrmShoListCart,delBookShopCart} = ShopCartService
+const { addBookToShopCart,appOrSubtrBookFrmShoListCart,appOrSubtrBookInShoListCart,delBookShopCart,delBookInShopCart} = ShopCartService
 </script>
 
 <style lang='scss' scoped>

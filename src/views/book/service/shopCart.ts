@@ -70,11 +70,27 @@ export default class ShopCartService {
     await ShopCartService.shopStore.appOrSubtrBookFrmShopCart(shopCart)
     BookService.updateBookNum(purcharsenum, bookItem.ISBN)
   }
+  static async appOrSubtrBookInShoListCart(shopCart: ShopCart, event: Event) {
+    const curTarget = <HTMLBodyElement>event.currentTarget
+    const className = curTarget.className
+    if (className === 'shopcart-operate-add') {
+      shopCart.purcharsenum = shopCart.purcharsenum + 1
+    } else if (className === 'shopcart-operate-minus') {
+      shopCart.purcharsenum = shopCart.purcharsenum - 1
+    }
+    await ShopCartService.shopStore.appOrSubtrBookFrmShopCart(shopCart)
+    BookService.updateBookNum(shopCart.purcharsenum, shopCart.bookisbn)
+  }
   static async delBookShopCart(bookItem: BookItem) {
     const curShopcartid = ShopCartService.getExistsShopCartID(bookItem)
     if (!curShopcartid) return
     await ShopCartService.shopStore.delBookShopCart(curShopcartid)
     BookService.updateBookNum(0, bookItem.ISBN)
+  }
+  static async delBookInShopCart(shopCart: ShopCart) {
+    if (!shopCart.shopcartid) return;
+    await ShopCartService.shopStore.delBookShopCart(shopCart.shopcartid)
+    BookService.updateBookNum(0, shopCart.bookisbn)
   }
   static computeTotal() {
     const totalCount = computed(() => {
@@ -105,7 +121,7 @@ export default class ShopCartService {
     ShopCartService.ball.value.showHidden = true
   }
   static beforeBall(el: Element) {
-    document.body.scrollHeight
+    // document.body.scrollHeight
     const curEl = <HTMLBodyElement>el
     const addBtn = <HTMLBodyElement>ShopCartService.ball.value.crrentTarget
     const addBtnRect = addBtn.getBoundingClientRect()
