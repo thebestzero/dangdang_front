@@ -2,13 +2,13 @@
   <div class="shopcartlist">
     <div class="header">
       <i class="iconfont icon-xiangzuojiantou back" @click="router.back()"></i>
-      <input type="checkbox" class="check" />
+      <input type="checkbox" class="check" v-model="checkAll" @change="selectAll" />
       <span class="label">当当网</span>
     </div>
     <div class="items">
       <div class="item" v-for="(item,index) in shopCartList" :key="item.shopcartid">
         <div class="content">
-          <input type="checkbox" class="check" />
+          <input type="checkbox" class="check" v-model="item.checked" @change="checkItem"/>
           <div class="pic">
             <img  class="bookimg" :src="getImg(item.bookpicname)" />
           </div>
@@ -43,6 +43,8 @@ import getImg from '@/utils/imgUtil'
 import ShopCartService from '@/views/book/service/shopCart';
 import AddSubtrsc from '@/views/book/components/AddSubtrsc.vue'
 import {useRouter} from 'vue-router';
+
+const {checkAll,selectAll} = ShopCartService
 const {shopCartList} = ShopCartService.shopStoreToRefs
 const { totalCount, totalPrice } = ShopCartService.computeTotal()
 

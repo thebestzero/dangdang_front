@@ -20,6 +20,9 @@ export const useShopStore = defineStore('shopStore', {
     },
     },
   actions:{
+    storeShopCartList(shopCartList:ShopCart[]){
+      this.shopCartList = shopCartList
+    },
     async findShopCartList(){
       const res:AxiosResponse<ShopCart[]> = await ShopCartApi.getCurUserShopCartList(1)
       this.shopCartList = res.data

@@ -12,7 +12,21 @@ export default class ShopCartService {
   static shopStore = useShopStore()
   static shopStoreToRefs = storeToRefs(this.shopStore)
   static ball: Ref<BallType> = ref({ showHidden: false })
+  static checkAll = ref(false)
 
+  static selectAll(){
+    const shopCartList = ShopCartService.shopStore.getShopCartList.map((shopcart) => {
+      shopcart.checked = ShopCartService.checkAll.value
+      return shopcart
+    })
+    ShopCartService.shopStore.storeShopCartList(shopCartList)
+  }
+  static checkItem(){
+    const isSelectAll = ShopCartService.shopStore.getShopCartList.every((shopCart) => {
+        return shopCart.checked
+    })
+    ShopCartService.checkAll.value = isSelectAll
+  }
   static async requestShopCartList() {
     await ShopCartService.shopStore.findShopCartList()
   }
