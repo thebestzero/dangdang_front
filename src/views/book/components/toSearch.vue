@@ -3,7 +3,7 @@
     <i class="iconfont icon-zuojiantou" @click="backRouter"></i>
     <div class="tosearch">
       <i class="iconfont icon-fangdajing"></i>
-      <div class="tosearch-content">
+      <div class="tosearch-content" @click="router.push({name:'search'})">
         <input type="text" />
         <span>
             <div v-show="getCurrentThrdCtgy.thirdname !==''">

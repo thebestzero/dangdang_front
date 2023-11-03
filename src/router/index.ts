@@ -24,6 +24,11 @@ const routes:RouteRecordRaw[] = [
     path:'/shopcartlist',
     component: () => import('@/views/shopcartlist/index.vue')
   },
+  {
+    name:'search',
+    path:'/search',
+    component: () => import('@/views/search/index.vue')
+  },
 ]
 
 const router = createRouter({
