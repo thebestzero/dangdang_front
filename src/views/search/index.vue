@@ -14,8 +14,8 @@
       <span class="searchbtn">搜索</span>
     </div>
     <div class="autocomplete" v-show="isOpenAutoComplete">
-      <div class="autocomplete-item" v-for="(keyword,index) in keywords" :key="index">
-        <span class="keyword">{{keyword}}</span>
+      <div class="autocomplete-item" v-for="(item,index) in keywordList" :key="index" @mousedown='chooseKeyword(item.keyword)'>
+        <span class="keyword">{{item.keyword}}</span>
       </div>
     </div>
     <div class="search-history">
@@ -24,9 +24,19 @@
         <i class="iconfont icon-shanchu"></i>
       </div>
       <div class="search-history-items">
-        <div class="item" v-for="(item,index) in items">{{item}}</div>
+        <div class="item" v-for="(item,index) in getHistoryKeywordList">{{item}}</div>
       </div>
     </div>
+    <div class="search-history">
+      <div class="search-history-header">
+        <span class="historytext">搜索发现</span>
+        <i class="iconfont icon-shanchu"></i>
+      </div>
+      <div class="search-history-items">
+        <div class="item" v-for="(item,index) in getHistorykeywordObjslist">{{item.historykeyword}}</div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -34,10 +44,10 @@
 import {useRouter} from 'vue-router';
 import searchService from './service'
 const router = useRouter()
-const {isOpenAutoComplete,searchKeywords,closeKeywords,resetKeywords,searchStoreRef} = searchService
-const {keyword} = searchStoreRef
-const items = ['六年级作业','语文','数学','六年级作业','语文','数学','六年级作业','语文','数学']
+const {isOpenAutoComplete,searchKeywords,closeKeywords,resetKeywords,searchStoreRef,chooseKeyword,init} = searchService
+const {keyword,keywordList,getHistoryKeywordList,getHistorykeywordObjslist} = searchStoreRef
 const keywords = ['六年级上册','六年级同步作业','六年级+七年级作业','六年级中册','六年级下册']
+init()
 </script>
 
 <style lang="scss" scoped>

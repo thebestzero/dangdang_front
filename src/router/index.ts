@@ -5,6 +5,11 @@ const book = () => import('@/views/book/index.vue')
 
 const routes:RouteRecordRaw[] = [
   {
+    name:'login',
+    path:'/login',
+    component:import('@/views/login/index.vue')
+  },
+  {
     name:'crgy',
     path:'/ctgy',
     component:ctgy

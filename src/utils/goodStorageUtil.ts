@@ -21,13 +21,15 @@ class Storage{
   set(key:string,value:string):any
   set(key:string,value:object):any
   set(key:string,value:any[]):any
+  set(key:string,value:string,option:OPTION):any
   set(key:string,value:any[],option:OPTION):any
   set(key:string,value:object,option:OPTION):any
   set(key: string, value: object, options: OPTION, propkey: string, propvalue: any):any
   set(key: string, value: object | any[] | string, options: OPTION = OPTION.NONE, propkey: string = '', propvalue?: any){
-    if (Array.isArray(value) && options === OPTION.ACCUMU){
+    if (options === OPTION.ACCUMU){
       const arr = goodStorage.get(key,[])
-      arr.push(...value)
+      if (Array.isArray(value))arr.push(...value)
+      else if (typeof value === 'string' && !arr.includes(value)) arr.push(value)
       goodStorage.set(key,arr)
       return arr
     }else if (isPlainObject(value) && options === OPTION.ADDAPPENDOBJTOARR){
