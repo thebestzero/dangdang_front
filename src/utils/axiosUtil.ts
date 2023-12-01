@@ -6,6 +6,7 @@ import axios, {
 } from 'axios'
 import {ElMessage} from 'element-plus'
 import config from '@/config'
+import storage from 'good-storage';
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'patch';
 interface AxiosRequestConfig_ extends AxiosRequestConfig{
@@ -48,6 +49,9 @@ class AxiosUtil {
   //  1. 请求拦截器
   beforeReqIntercpt(){
     this.axiosInstance.interceptors.request.use((request)=>{
+      const token = storage.get('token')
+      const headers = request.headers!
+      if (!headers.hasAuthorization() && token) headers.setAuthorization(`Bearer ${token}`)
       return request
     })
   }

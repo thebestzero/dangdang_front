@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import storage from 'good-storage';
 
 const ctgy = () => import('@/views/ctgy/index.vue')
 const book = () => import('@/views/book/index.vue')
@@ -7,10 +8,18 @@ const routes:RouteRecordRaw[] = [
   {
     name:'login',
     path:'/login',
-    component:import('@/views/login/index.vue')
+    component:import('@/views/login/index.vue'),
+    beforeEnter:(to, from, next) => {
+      const token = storage.get('token')
+      if (token){
+        next({name:'ctgy'})
+      }else {
+        next()
+      }
+    }
   },
   {
-    name:'crgy',
+    name:'ctgy',
     path:'/ctgy',
     component:ctgy
   },
@@ -40,5 +49,12 @@ const router = createRouter({
   history:createWebHashHistory(import.meta.env.BASE_URL),
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  const token = storage.get('token')
+  if (token || to.name === 'login'){
+    next()
+  }else {
+    next({name:'login'})
+  }
+})
 export default router

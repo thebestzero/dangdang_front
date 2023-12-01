@@ -2,21 +2,31 @@
   <div class='login'>
     <img class='pic' :src="getImg('login.png')">
     <div class='username'>
-      <input type='text' class='username-input' name='username' placeholder='用户名'>
+      <input type='text' class='username-input' name='username' placeholder='用户名' v-model="username">
     </div>
     <div class='psw'>
-      <input type='text' name='psw' class='psw-input' placeholder='密码'>
+      <input type='text' name='psw' class='psw-input' placeholder='密码' v-model="password">
     </div>
-    <div class='loginbtn'>登录</div>
+    <div class='loginbtn' @click="login">登录</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import getImg from '@/utils/imgUtil'
-import { ref } from 'vue'
-import storage from 'good-storage'
-const username = ref('')
-const password = ref('')
+import { toRefs,reactive } from 'vue'
+import {userStore} from '@/store/user';
+import storage,{OPTION} from '@/utils/goodStorageUtil'
+import {useRouter} from 'vue-router';
+const store = userStore()
+const router = useRouter()
+const {username,password} = toRefs(reactive({
+  username:'',
+  password:''
+}))
+const login = async () => {
+  await store.login(username.value,password.value)
+  if (storage.get('token')) router.push({name: 'ctgy'})
+}
 
 </script>
 
