@@ -7,6 +7,9 @@ class BookApi{
   getBooksBySecCtgyId(secondctgyId:number,sortField:string,ascOrDesc:string) {
     return request.get(`/booksmodule/findBooksBySecCtgyId/${secondctgyId}/${sortField}/${ascOrDesc}`, false);
   }
+  findBookByISBN(isbn:string){
+    return request.get(`/booksmodule/findBookByISBN/${isbn}`, false);
+  }
 }
 
 export default BookApi.api

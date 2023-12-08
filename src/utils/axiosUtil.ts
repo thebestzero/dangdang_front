@@ -7,6 +7,7 @@ import axios, {
 import {ElMessage} from 'element-plus'
 import config from '@/config'
 import storage from 'good-storage';
+import {useRouter} from 'vue-router';
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'patch';
 interface AxiosRequestConfig_ extends AxiosRequestConfig{
@@ -24,7 +25,7 @@ interface Request{
 }
 const methods:Method[] = ['get' , 'post' , 'put' , 'delete' ,'patch']
 const SERVER_ERR = '请求服务器的网址错误或网络连接失败'
-
+const router = useRouter()
 class AxiosUtil {
   static axiosUtil: AxiosUtil = new AxiosUtil()
   axiosInstance!: AxiosInstance
@@ -60,6 +61,12 @@ class AxiosUtil {
     this.axiosInstance.interceptors.response.use((response)=>{
       const {data,msg,code} = response.data
       if (code === 200) return response.data
+      else if (msg === 'invalid token'){
+        storage.set('token',null)
+        router.push({name:'login'})
+        ElMessage.error(msg)
+        throw new Error(msg)
+      }
       else if (code === 500) return ElMessage.error(`${msg}`)
       else return ElMessage.error('服务器出现了未知错误')
     },(error)=>{

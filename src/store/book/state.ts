@@ -14,5 +14,7 @@ export interface BookItem {
 }
 
 export interface BookState {
-  bookList:BookItem[]
+  bookList:BookItem[],
+  bookDetail:BookItem,
+  isbn:string
 }

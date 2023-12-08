@@ -4,13 +4,17 @@ import { ref } from 'vue'
 import CtgyService from '@/views/ctgy/service'
 import { ThirdCtgy } from '@/store/ctgy/state'
 import ShopCartService from '@/views/book/service/shopCart'
+import router from '@/router';
 export default class BookService {
   static bookStore = useBookStore()
   static bookStoreToRefs = storeToRefs(this.bookStore)
   static isReadyAsc = ref(true)
   static sortField = ref('')
   static ascOrDesc = ref('desc')
-
+  static goDetail(isbn:string){
+    BookService.bookStore.storeBookIsbn(isbn)
+    router.push({name:'bookdetail'})
+  }
   static async requestBookList(
     thirdCtgyId: number,
     sortField: string = 'originalprice',

@@ -43,6 +43,24 @@ const routes:RouteRecordRaw[] = [
     path:'/search',
     component: () => import('@/views/search/index.vue')
   },
+  {
+    name:'bookdetail',
+    path:'/bookdetail',
+    redirect:'/goods',
+    component: () => import('@/views/bookdetail/index.vue'),
+    children:[
+      {
+        name:'goods',
+        path:'/goods',
+        component:() => import('@/views/bookdetail/component/goods.vue')
+      },
+      {
+        name:'evaluate',
+        path:'/evaluate',
+        component:() => import('@/views/bookdetail/component/evaluate/index.vue')
+      }
+    ]
+  },
 ]
 
 const router = createRouter({

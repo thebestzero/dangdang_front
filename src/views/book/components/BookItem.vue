@@ -3,6 +3,7 @@
     <div
       class="bookitem"
       v-for='(item,index) in getBookList'
+      @click="goDetail(item.ISBN)"
     >
       <img class="book-pic" :src="getImg(item.bookpicname)" />
       <div class="bookinfo">
@@ -53,7 +54,7 @@ import CtgyService from '@/views/ctgy/service'
 import AddSubtrsc from './AddSubtrsc.vue'
 import _ from 'lodash';
 
-const {requestBookList} = BookService
+const {requestBookList,goDetail} = BookService
 const {getBookList} = BookService.bookStoreToRefs
 const {getCurrentThrdCtgy} = CtgyService.ctgyStoreToRef
 
